@@ -93,4 +93,8 @@
 
 
 (provide 'deepl-translate.el)
+
+;; Local Variables:
+;; no-byte-compile: t
+;; End:
 ;;; deepl-translate.el ends here
