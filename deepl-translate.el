@@ -35,6 +35,7 @@
 (defvar deepl-endpoint "api-free.deepl.com") ;;; For paid version api.deepl.com
 
 (cl-defun confirm-send-long-string (&key retry)
+  "RETRY."
   (let ((send-it-p
          (read-from-minibuffer
           (if retry
@@ -46,45 +47,52 @@
           (t (confirm-send-long-string :retry t)))))
 
 (cl-defun deepl-translate-internal (text source-lang target-lang success-callback)
+  "TEXT SOURCE-LANG TARGET-LANG SUCCESS-CALLBACK."
   (when (and (> (length text) deepl-confirmation-threshold)
              (not (confirm-send-long-string)))
     (cl-return-from deepl-translate-internal))
 
   (request (format "https://%s/v2/translate" deepl-endpoint)
-    :type "POST"
-    :data `(("auth_key" . ,deepl-auth-key)
-            ("text" . ,text)
-            ("source_lang" . ,source-lang)
-            ("target_lang" . ,target-lang))
-    :parser 'json-read
-    :success success-callback))
+		   :type "POST"
+		   :data `(("auth_key" . ,deepl-auth-key)
+				   ("text" . ,text)
+				   ("source_lang" . ,source-lang)
+				   ("target_lang" . ,target-lang))
+		   :parser 'json-read
+		   :success success-callback))
 
 (cl-defun deepl--output-to-messages (&key data &allow-other-keys)
+  "DATA."
   (let ((translated-text (cdr (assoc 'text (aref (cdr (assoc 'translations data)) 0)))))
     (kill-new translated-text)
     (message translated-text)))
 
 (defun deepl-ej (start end)
+  "START END."
   (interactive "r")
   (let ((region (buffer-substring start end)))
     (deepl-translate-internal region "EN" "JA" #'deepl--output-to-messages)))
 
 (defun deepl-je (start end)
+  "START END."
   (interactive "r")
   (let ((region (buffer-substring start end)))
     (deepl-translate-internal region "JA" "EN" #'deepl--output-to-messages)))
 
 (defun ja-char-p (char)
+  "CHAR."
   (or (<= #x3041 char #x309f) ; hiragana
-      (<= #x30a1 char #x30ff) ; katakana
-      (<= #x4e01 char #x9faf) ; kanji
-      ))
+	  (<= #x30a1 char #x30ff) ; katakana
+	  (<= #x4e01 char #x9faf) ; kanji
+	  ))
 
 (defun ja-string-p (str)
+  "STR."
   (>= (cl-count-if #'ja-char-p str) 3))
 
 ;;;###autoload
 (defun deepl-translate (start end)
+  "START END."
   (interactive "r")
   (let ((region (buffer-substring start end)))
     (if (ja-string-p region)
