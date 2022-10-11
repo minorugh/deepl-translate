@@ -1,20 +1,38 @@
-;;; Install
-;; requestが必要なので M-x package-install request などでインストールしておく
-;; init.elなどでロードする
-;; (load-file "/path/to/deepl.el")
-;; キーバインドを設定しておく
-;; (global-set-key (kbd "C-c t") 'deepl-translate)
+;;; deepl-translate.el --- Emacs deepl client -*- lexical-binding: t; -*-
 
-;;; Usage
-;; 翻訳したい部分をリージョン選択して設定したキーバインド、または M-x deepl-translate
-;; 翻訳結果がミニバッファに出る。また、同じ内容がクリップボードにコピーされている
+;; Copyright (C) 2022 by Minoru Yamada
+;; This script is a modification of Satoshi Imai's deepl.pl so that it can be used with el-get.
+;; URL: https://gist.github.com/masatoi/ec90d49331e40983427025f8167d01ee
+;; URL: https://gist.github.com/masatoi/ec90d49331e40983427025f8167d01ee
+;; Version: 1.0
+;; Package-Requires: ((emacs "27.1") (request "0.3.0"))
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;;;; Usage
+;;; Select the region you want to translate and set key bindings, or M-x deepl-translate
+;;; The result of the translation will appear in the minibuffer.  Also, the same content is copied to the clipboard
+
+;;; Code:
 
 (require 'request)
 
-(defvar deepl-auth-key) ; この変数にdeeplから発行されるキーを設定する
+(defvar deepl-auth-key) ;;; Set this variable to the key issued by deepl
 (defvar deepl-confirmation-threshold 3000)
-;; (defvar deepl-endpoint "api.deepl.com") ; 無料版は api-free.deepl.com
-(defvar deepl-endpoint "api-free.deepl.com")
+(defvar deepl-endpoint "api-free.deepl.com") ;;; For paid version api.deepl.com
 
 (cl-defun confirm-send-long-string (&key retry)
   (let ((send-it-p
@@ -73,4 +91,6 @@
         (deepl-translate-internal region "JA" "EN" #'deepl--output-to-messages)
       (deepl-translate-internal region "EN" "JA" #'deepl--output-to-messages))))
 
-(provide 'deepl.el)
+
+(provide 'deepl-translate.el)
+;;; deepl.el ends here
