@@ -18,6 +18,6 @@
 ```
 
 ## Usage
-* Select the region you want to translate and use the key bindings you set, or M-x deepl-translate
+* Select the region you want to translate and use the key bindings you set, or `M-x deepl-translate`
 * The result of the translation appears in the minibuffer. Also, the same content is copied to the clipboard
 
