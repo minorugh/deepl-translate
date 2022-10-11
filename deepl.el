@@ -14,7 +14,7 @@
 (defvar deepl-auth-key) ; この変数にdeeplから発行されるキーを設定する
 (defvar deepl-confirmation-threshold 3000)
 ;; (defvar deepl-endpoint "api.deepl.com") ; 無料版は api-free.deepl.com
-(defvar deepl-endpoint "api-free.deepl.com") 
+(defvar deepl-endpoint "api-free.deepl.com")
 
 (cl-defun confirm-send-long-string (&key retry)
   (let ((send-it-p
@@ -65,6 +65,7 @@
 (defun ja-string-p (str)
   (>= (cl-count-if #'ja-char-p str) 3))
 
+;;;###autoload
 (defun deepl-translate (start end)
   (interactive "r")
   (let ((region (buffer-substring start end)))
@@ -72,3 +73,4 @@
         (deepl-translate-internal region "JA" "EN" #'deepl--output-to-messages)
       (deepl-translate-internal region "EN" "JA" #'deepl--output-to-messages))))
 
+(provide 'deepl.el)
