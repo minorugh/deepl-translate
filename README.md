@@ -1,9 +1,8 @@
 # deepl-translate.el
 
-## Install request
+## Install
 * request is required, so install it with `M-x package-install request` etc.
-
-## Load this code file from init.el and assign deepl-translate to the appropriate key bindings. In addition, set the API key
+* Load this code file from init.el and assign deepl-translate to the appropriate key bindings. In addition, set the API key
 ```emacs-lisp
 (load-file "/path/to/deepl.el")
 (global-set-key (kbd "C-c t") 'deepl-translate)
