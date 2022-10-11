@@ -3,7 +3,7 @@
 ;; Copyright (C) 2022 by Minoru Yamada
 ;; This script is a modification of Satoshi Imai's deepl.pl so that it can be used with el-get.
 ;; URL: https://gist.github.com/masatoi/ec90d49331e40983427025f8167d01ee
-;; URL: https://gist.github.com/masatoi/ec90d49331e40983427025f8167d01ee
+;; URL: https://github.com/minorugh/deepl-translate
 ;; Version: 1.0
 ;; Package-Requires: ((emacs "27.1") (request "0.3.0"))
 
@@ -93,4 +93,4 @@
 
 
 (provide 'deepl-translate.el)
-;;; deepl.el ends here
+;;; deepl-translate.el ends here
