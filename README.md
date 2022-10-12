@@ -6,14 +6,14 @@ To use DeepL from Emacs, use the API; you need an authentication key to use the 
 First, access the official website.
 [DeepL](https://www.deepl.com/translator)
 
-At the top of the site, there is a place where it says "API", so click there. 
-Select the Free Registration option to register an account and receive an API key.
+At the top of the site you will see "API".
+Select "Free Registration" to complete your account registration, and an API key will be issued.
 
 ## Install
 * request is required, so install it with `M-x package-install request` etc.
 * Load this code file from init.el and assign deepl-translate to the appropriate key bindings. In addition, set the API key
 ```emacs-lisp
-(load-file "/path/to/deepl.el")
+(load-file "/path/to/deepl-tranlate.el")
 (global-set-key (kbd "C-c t") 'deepl-translate)
 (setq deepl-auth-key "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
 ```
