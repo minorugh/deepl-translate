@@ -29,7 +29,6 @@
 ;;; Code:
 
 (require 'request)
-
 (defvar deepl-auth-key) ;;; Set this variable to the key issued by deepl
 (defvar deepl-confirmation-threshold 3000)
 (defvar deepl-endpoint "api-free.deepl.com") ;;; For paid version api.deepl.com
@@ -83,6 +82,7 @@
 (defun ja-string-p (str)
   (>= (cl-count-if #'ja-char-p str) 3))
 
+
 ;;;###autoload
 (defun deepl-translate (start end)
   (interactive "r")
@@ -93,5 +93,4 @@
 
 
 (provide 'deepl-translate.el)
-
 ;;; deepl-translate.el ends here
