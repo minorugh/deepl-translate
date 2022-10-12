@@ -1,5 +1,13 @@
 # deepl-translate.el
 
+## DeepL Obtaining an authentication key for the API
+To use DeepL from Emacs, use the API; you need an authentication key to use the API.
+
+First, access the official website.
+[DeepL](https://www.deepl.com/translator)
+
+At the top of the site, there is a place where it says "API", so click there. 
+
 ## Install
 * request is required, so install it with `M-x package-install request` etc.
 * Load this code file from init.el and assign deepl-translate to the appropriate key bindings. In addition, set the API key
