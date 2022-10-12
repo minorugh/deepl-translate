@@ -7,6 +7,7 @@ First, access the official website.
 [DeepL](https://www.deepl.com/translator)
 
 At the top of the site, there is a place where it says "API", so click there. 
+Select the Free Registration option to register an account and receive an API key.
 
 ## Install
 * request is required, so install it with `M-x package-install request` etc.
