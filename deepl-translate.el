@@ -82,8 +82,6 @@
 (defun ja-string-p (str)
   (>= (cl-count-if #'ja-char-p str) 3))
 
-
-;;;###autoload
 (defun deepl-translate (start end)
   (interactive "r")
   (let ((region (buffer-substring start end)))
