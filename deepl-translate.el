@@ -83,6 +83,7 @@
   (>= (cl-count-if #'ja-char-p str) 3))
 
 (defun deepl-translate (start end)
+  "Deepl translate with display minibuffer"
   (interactive "r")
   (let ((region (buffer-substring start end)))
     (if (ja-string-p region)
