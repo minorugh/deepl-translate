@@ -1,13 +1,7 @@
-;;; Install
-;; requestが必要なので M-x package-install request などでインストールしておく
-;; init.elなどでロードする
-;; (load-file "/path/to/deepl.el")
-;; キーバインドを設定しておく
-;; (global-set-key (kbd "C-c t") 'deepl-translate)
-
-;;; Usage
-;; 翻訳したい部分をリージョン選択して設定したキーバインド、または M-x deepl-translate
-;; 翻訳結果がミニバッファに出る。また、同じ内容がクリップボードにコピーされている
+;;; deepl-translate.el --- Deepl translate configurations.
+;;; Commentary:
+;;; Code:
+;; (setq debug-on-error t)
 
 (require 'request)
 
@@ -70,3 +64,8 @@
     (if (ja-string-p region)
         (deepl-translate-internal region "JA" "EN" #'deepl--output-to-messages)
       (deepl-translate-internal region "EN" "JA" #'deepl--output-to-messages))))
+
+;; Local Variables:
+;; no-byte-compile: t
+;; End:
+;;; deepl-translate.el ends here
