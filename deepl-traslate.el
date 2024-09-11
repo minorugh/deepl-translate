@@ -13,7 +13,7 @@
 
 (defvar deepl-auth-key) ; この変数にdeeplから発行されるキーを設定する
 (defvar deepl-confirmation-threshold 3000)
-(defvar deepl-endpoint "api.deepl.com") ; 無料版は api-free.deepl.com
+(defvar deepl-endpoint "api-free.deepl.com") ; 無料版は api-free.deepl.com
 
 (cl-defun confirm-send-long-string (&key retry)
   (let ((send-it-p
