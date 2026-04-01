@@ -4,7 +4,7 @@
 ;; Author: Minoru Yamada <minorugh@gmail.com>
 ;; URL: https://github.com/minorugh/deeple-translate
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "27.1") (ivy "0.13.0"))
+;; Package-Requires: ((emacs "27.1") (request "0.3.0"))
 ;; Keywords: deepl, translate, versioning
 
 ;;; Commentary:
@@ -50,11 +50,13 @@
     (kill-new translated-text)
     (message translated-text)))
 
+;;;###autoload
 (defun deepl-ej (start end)
   (interactive "r")
   (let ((region (buffer-substring start end)))
     (deepl-translate-internal region "EN" "JA" #'deepl--output-to-messages)))
 
+;;;###autoload
 (defun deepl-je (start end)
   (interactive "r")
   (let ((region (buffer-substring start end)))
