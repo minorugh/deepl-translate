@@ -1,4 +1,12 @@
 ;;; deepl-translate.el --- Deepl translate configurations. -*- lexical-binding: t -*-
+
+;; Copyright (C) 2026 Minoru Yamada and Claude (Anthropic)
+;; Author: Minoru Yamada <minorugh@gmail.com>
+;; URL: https://github.com/minorugh/deeple-translate
+;; Version: 0.1.0
+;; Package-Requires: ((emacs "27.1") (ivy "0.13.0"))
+;; Keywords: deepl, translate, versioning
+
 ;;; Commentary:
 ;;; Code:
 ;; (setq debug-on-error t)
