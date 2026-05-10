@@ -14,10 +14,15 @@
 (require 'request)
 
 (defvar deepl-auth-key) ; この変数にdeeplから発行されるキーを設定する
-(defvar deepl-confirmation-threshold 3000)
-(defvar deepl-endpoint "api-free.deepl.com") ; 無料版は api-free.deepl.com
+(defvar deepl-confirmation-threshold 3000
+  "Character count threshold above which the user is asked to confirm before sending.")
+(defvar deepl-endpoint "api-free.deepl.com"
+  "DeepL API host.  Use \"api-free.deepl.com\" for the free plan.") ; 無料版は api-free.deepl.com
 
 (cl-defun confirm-send-long-string (&key retry)
+  "Ask the user to confirm sending a long string.
+Return t if confirmed, nil otherwise.
+RETRY non-nil means the prompt is repeated after an invalid answer."
   (let ((send-it-p
          (read-from-minibuffer
           (if retry
@@ -31,6 +36,9 @@
 ;; 2026-03-10 DeepL API 仕様変更に対応
 ;; 認証方式を POST ボディ (auth_key) から Authorization ヘッダーに変更
 (cl-defun deepl-translate-internal (text source-lang target-lang success-callback)
+  "Send TEXT to the DeepL API translating from SOURCE-LANG to TARGET-LANG.
+Call SUCCESS-CALLBACK with the parsed JSON response on success.
+Prompts for confirmation if TEXT exceeds `deepl-confirmation-threshold'."
   (when (and (> (length text) deepl-confirmation-threshold)
              (not (confirm-send-long-string)))
     (cl-return-from deepl-translate-internal))
@@ -45,6 +53,7 @@
     :success success-callback))
 
 (cl-defun deepl--output-to-messages (&key data &allow-other-keys)
+  "Callback for `request': extract translated text from DATA,copy it to the kill ring, and display it as a message."
   (let ((translated-text (cdr (assoc 'text (aref (cdr (assoc 'translations data)) 0)))))
     (setq inhibit-message nil)
     (kill-new translated-text)
@@ -52,28 +61,37 @@
 
 ;;;###autoload
 (defun deepl-ej (start end)
-  (interactive "r")
+  "Translate the region from START to END from English to Japanese via DeepL.
+Result is shown in the echo area and added to the kill ring."
+(interactive "r")
   (let ((region (buffer-substring start end)))
     (deepl-translate-internal region "EN" "JA" #'deepl--output-to-messages)))
 
 ;;;###autoload
 (defun deepl-je (start end)
-  (interactive "r")
+  "Translate the region from START to END from Japanese to English via DeepL.
+Result is shown in the echo area and added to the kill ring."
+(interactive "r")
   (let ((region (buffer-substring start end)))
     (deepl-translate-internal region "JA" "EN" #'deepl--output-to-messages)))
 
 (defun ja-char-p (char)
+  "Return non-nil if CHAR is a Japanese hiragana, katakana, or kanji character."
   (or (<= #x3041 char #x309f) ; hiragana
       (<= #x30a1 char #x30ff) ; katakana
       (<= #x4e01 char #x9faf) ; kanji
       ))
 
 (defun ja-string-p (str)
+  "Return non-nil if STR contain at least 3 Japanese characters."
   (>= (cl-count-if #'ja-char-p str) 3))
 
 ;;;###autoload
 (defun deepl-translate (start end)
-  (interactive "r")
+  "Translate the region from START to END via DeepL.
+auto-detecting the language direction.
+Japanese input is translated to English; anything else to Japanese."
+(interactive "r")
   (let ((region (buffer-substring start end)))
     (if (ja-string-p region)
         (deepl-translate-internal region "JA" "EN" #'deepl--output-to-messages)
@@ -82,7 +100,6 @@
 
 (provide 'deepl-translate)
 ;; Local Variables:
-;; flycheck-disabled-checkers: (emacs-lisp-checkdoc)
 ;; byte-compile-warnings: (not free-vars)
 ;; End:
 ;;; deepl-translate.el ends here
